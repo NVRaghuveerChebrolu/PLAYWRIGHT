@@ -56,16 +56,18 @@ await expect(page).toHaveTitle("Google"); //this will wait for expect time out p
 });
 
 
-test.only('UI Controls Drop Downs',async({page})=>
+test.only('UI Controls Drop Downs',async({browser})=>
 {
+const context = await browser.newContext();
+const page = await context.newPage();
 await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 const userName = page.locator("#username");
 const signIn = page.locator("#signInBtn");
 const documentlink=page.locator("[href*='documents-request']"); 
 const dropdown = page.locator("select.form-control");
 await dropdown.selectOption("consult");
-// await page.locator(".radiotextsty").last().click();
-// await page.locator("#okayBtn").click();
+await page.locator(".radiotextsty").last().click();
+await page.locator("#okayBtn").click();
 expect(page.locator(".radiotextsty")).last().toBeChecked();
 console.log(await page.locator(".radiotextsty").last().isChecked());
 await expect(page.locator(".radiotextsty").last()).not.toBeChecked();
@@ -76,28 +78,25 @@ expect(await page.locator("#terms").isChecked()).toBeFalsy();
 await expect(documentlink).toHaveAttribute("class","blinkingText");
 });
 
-test.only('UI Controls Child Windows',async({browser})=>
+test('UI Controls Child Windows',async({browser})=>
 {
-    const context = await browser.newContext()
+    const context = await browser.newContext();
     const page = await context.newPage();
     const userName = page.locator("#username");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const documentlink = page.locator("[href*='documents-request']");
-    
     //if we have dependency on multiple steps to perform any action we use promise.all
-    //to make sure that all the steps are completed before moving to next step
-
-    const[newPage]=Promise.all(
+    //to make sure that all the steps are completed before moving to next step 
+    const[newPage]=await Promise.all(
     [
         context.waitForEvent('page'),//listen for any page pending,rejected,fulfilled
         documentlink.click(),//new page is opened
     ])
     const text = await newPage.locator(".red").textContent();
-    const arrayText = text.split("@")
+    const arrayText = text.split("@");
     const domain = arrayText[1].split(" ")[0];   
     console.log(domain);
     await page.locator("#username").type(domain);
-    page.pause();
-    console.log(await page.locator("#username").textContent());
-    
+    // await page.pause();
+    console.log(await page.locator("#username").inputValue());
 });
