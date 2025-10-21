@@ -24,7 +24,14 @@ const config=({  //config is a varaible which is holding all the info required t
    // browserName: 'firefox' //decides which brower to pick and execute
    // browserName: 'webkit',  //for safari the playwright webkit engine derived from safari
     //headless: true, // by default the test cases will be executed in headless even if you are not specifing this
-    headless: false // execution will happen in browser.If we specifiy this then no need to specifiy --headed in the terminal 
+    headless: false, // execution will happen in browser.If we specifiy this then no need to specifiy --headed in the terminal 
+    // screenshot: 'only-on-failure', //screenshot will be taken only when test case fails
+    screenshot: 'on', //screenshot will be taken for all test cases
+    // video: 'retain-on-failure', //video will be recorded only when test case fails
+    //video: 'on', //video will be recorded for all test cases
+    // trace: 'retain-on-failure', //trace will be recorded only when test case fails
+    trace: 'on', //trace will be recorded for all test cases
+  
   },
   /* Run tests in files in parallel */
   // fullyParallel: true,
