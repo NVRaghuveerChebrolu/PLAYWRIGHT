@@ -14,6 +14,7 @@ await page.locator(".card-body b").first().waitFor();
 const titles = await page.locator(".card-body b").allTextContents();//it fectches and prints all text contents with in .card-body elements. 
 console.log(titles);
 const count = await products.count();
+console.log("count of total number of products:"+count);
 for(let i=0;i<count;i++){
   if(await products.nth(i).locator("b").textContent() === productName){
     //click on add to cart
@@ -23,7 +24,7 @@ for(let i=0;i<count;i++){
 }
 await page.locator("[routerlink*='cart']").click();
 await page.locator("div li").first().waitFor();
-const bool = await page.locator("h3:has-text('IPHONE 13 PRO')").isVisible();
+const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
 expect(bool).toBeTruthy();
 await page.locator("text=Checkout").click();
 await page.locator("[placeholder*='Country']").type("ind",{delay:100});
