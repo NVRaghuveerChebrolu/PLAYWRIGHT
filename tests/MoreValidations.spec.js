@@ -13,5 +13,9 @@ test('Pop Up Validations', async ({page}) => {
     await page.locator("#mousehover").scrollIntoViewIfNeeded();
     await page.locator("#mousehover").hover();
     await page.locator("text=Top").click();
+    const framesPage = page.frameLocator("#courses-iframe");
+    await framesPage.locator("li a[href*='lifetime-access']:visible").click();
+    const textCheck = await framesPage.locator(".text h2").textContent();
+    console.log(textCheck.split(" ")[1]);
+    await page.pause();
 });
-
